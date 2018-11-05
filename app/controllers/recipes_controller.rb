@@ -25,8 +25,8 @@ class RecipesController < ApplicationController
     erb :'/recipes/new'
   end
 
-  get '/recipes/:slug/edit' do
-    @recipe = Recipe.find_by_slug(params[:slug])
+  get '/recipes/:id/edit' do
+    @recipe = Recipe.find_by(id: params[:id])
     @ingredients = Ingredient.all
 
     if !User.logged_in?(session) ||  User.current_user(session).id != @recipe.user.id
@@ -36,8 +36,8 @@ class RecipesController < ApplicationController
     erb :'/recipes/edit'
   end
 
-  get '/recipes/:slug' do
-    @recipe = Recipe.find_by_slug(params[:slug])
+  get '/recipes/:id' do
+    @recipe = Recipe.find_by(id: params[:id])
 
     if !User.logged_in?(session) ||  User.current_user(session).id != @recipe.user.id
       redirect to '/'
@@ -56,14 +56,14 @@ class RecipesController < ApplicationController
       recipe.user = User.current_user(session)
       recipe.save
 
-      redirect to "/recipes/#{recipe.slug}"
+      redirect to "/recipes/#{recipe.id}"
     else
       redirect to 'recipes/new'
     end
   end
 
-  patch '/recipes/:slug' do
-    recipe = Recipe.find_by_slug(params[:slug])
+  patch '/recipes/:id' do
+    recipe = Recipe.find_by(id: params[:id])
 
     if !User.logged_in?(session) ||  User.current_user(session).id != recipe.user.id
       redirect to '/'
@@ -77,14 +77,14 @@ class RecipesController < ApplicationController
       recipe.set_ingredients_from_params(params)
       recipe.save
 
-      redirect to "/recipes/#{recipe.slug}"
+      redirect to "/recipes/#{recipe.id}"
     else
       redirect to "/recipes"
     end    
   end
 
-  delete '/recipes/:slug' do
-    recipe = Recipe.find_by_slug(params[:slug])
+  delete '/recipes/:id' do
+    recipe = Recipe.find_by(id: params[:id])
 
     if !User.logged_in?(session) ||  User.current_user(session).id != recipe.user.id
       redirect to '/'
