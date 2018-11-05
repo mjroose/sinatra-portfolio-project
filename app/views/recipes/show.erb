@@ -1,15 +1,32 @@
-<h1><%= @recipe.name %></h1>
+<div class="row">
+  <h1><%= @recipe.name %></h1>
+</div>
 
-<a href="/recipes/<%= @recipe.id %>/edit">Edit Recipe</a>
-<form method="POST" action="/recipes/<%= @recipe.id %>">
-  <input type="hidden" name="_method" value="delete">
-  <input type="submit" value="Delete Recipe">
-</form>
+<div class="row">
+  <div class="col">
+    <button onclick="window.location='/recipes/<%= @recipe.id %>/edit'" class="btn btn-light">Edit Recipe</button>
+  </div>
+  
+  <div class="col">
+    <form method="POST" action="/recipes/<%= @recipe.id %>" class="float-right">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" class="btn btn-danger" value="Delete Recipe">
+    </form>
+  </div>
+</div>
 
-<ul>
-  <% @recipe.ingredients.each do |ingredient| %>
-    <li><%= ingredient.name %></li>
-  <% end %>
-</ul>
+<div class="row justify-content-md-center">
+  <div class="col-lg-8">
+    <ul class="list-group">
+      <% @recipe.ingredients.each do |ingredient| %>
+        <li class="list-group-item"><%= ingredient.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
-<a href="/recipes">Back to Recipes</a>
+<div class="row">
+  <div class="col">
+    <button onclick="window.location='/recipes'" class="btn btn-light">Back to Recipes</button>
+  </div>
+</div>
