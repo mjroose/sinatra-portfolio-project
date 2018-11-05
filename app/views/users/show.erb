@@ -1,0 +1,8 @@
+<h1>Welcome, <%= @user.username %>!</h1>
+
+<h3>Recipes:</h3>
+<ul>
+  <% @recipes.all.each do |recipe| %>
+    <li><a href="/recipes/<%= recipe.slug %>"><%= recipe.name %></a></li>
+  <% end %>
+</ul>
