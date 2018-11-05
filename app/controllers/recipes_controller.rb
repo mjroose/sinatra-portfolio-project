@@ -25,6 +25,17 @@ class RecipesController < ApplicationController
     erb :'/recipes/new'
   end
 
+  get '/recipes/:slug/edit' do
+    @recipe = Recipe.find_by_slug(params[:slug])
+    @ingredients = Ingredient.all
+
+    if !User.logged_in?(session) ||  User.current_user(session).id != @recipe.user.id
+      redirect to '/'
+    end
+
+    erb :'/recipes/edit'
+  end
+
   get '/recipes/:slug' do
     @recipe = Recipe.find_by_slug(params[:slug])
 
@@ -40,29 +51,8 @@ class RecipesController < ApplicationController
       redirect to '/'
     end 
 
-    recipe = Recipe.create(name: params[:recipe][:name])
-    
-    if recipe
-      if params[:ingredients].include? :ids
-        ingredients = params[:ingredients][:ids].collect do |ingredient_id|
-          Ingredient.find_by(id: ingredient_id)
-        end.compact
-      else
-        ingredients = []
-      end
-
-      if params[:ingredients].include? :names
-        params[:ingredients][:names].each do |ingredient_name|
-          ingredient = Ingredient.find_or_create_by(name: ingredient_name) unless ingredient_name == ""
-          if ingredient
-            ingredients << ingredient
-          end
-        end
-      end
-
-      binding.pry
-      
-      recipe.ingredients = ingredients.uniq
+    if recipe = Recipe.create(name: params[:recipe][:name])
+      recipe.set_ingredients_from_params(params)
       recipe.user = User.current_user(session)
       recipe.save
 
@@ -71,5 +61,26 @@ class RecipesController < ApplicationController
     else
       redirect to 'recipes/new'
     end
+  end
+
+  patch '/recipes/:slug' do
+    recipe = Recipe.find_by_slug(params[:slug])
+
+    if !User.logged_in?(session) ||  User.current_user(session).id != recipe.user.id
+      redirect to '/'
+    end
+
+    if recipe
+      if params[:name] && params[:name] != ""
+        recipe.update(name: params[:name])
+      end
+      recipe.set_ingredients_from_params(params)
+      recipe.save
+
+      binding.pry
+      redirect to "/recipes/#{recipe.slug}"
+    else
+      redirect to "/recipes"
+    end    
   end
 end

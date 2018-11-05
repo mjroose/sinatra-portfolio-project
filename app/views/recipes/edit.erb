@@ -1,0 +1,19 @@
+<h1>Edit Recipe</h1>
+
+<form method="POST" action="/recipes/<%= @recipe.slug %>">
+  <input type="hidden" name="_method" value="patch">
+  <p><input type="text" name="recipe[name]" placeholder="Recipe Name" value="<%= @recipe.name %>"></p>
+  <h3>Ingredients</h3>
+  <p>
+    <% @ingredients.each do |ingredient| %>
+      <label for="<%= ingredient.id %>"><%= ingredient.name %></label>
+        <input type="checkbox" id="<%= ingredient.id %>" value="<%= ingredient.id %>" name="ingredients[ids][]" <%= "checked" if @recipe.ingredients.include? ingredient %>>
+    <% end %>
+  </p>
+  <% 5.times do %>
+    <p>
+      <input type="text" name="ingredients[names][]" placeholder="New Ingredient">
+    </p>
+  <% end %>
+  <input type="submit" value="Update Recipe">
+</form>
