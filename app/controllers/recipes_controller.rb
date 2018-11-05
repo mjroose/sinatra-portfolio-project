@@ -16,6 +16,15 @@ class RecipesController < ApplicationController
     erb :'/recipes/index'
   end
 
+  get '/recipes/new' do
+    if !User.logged_in?(session)
+      redirect to '/'
+    end
+
+    @ingredients = Ingredient.all
+    erb :'/recipes/new'
+  end
+
   get '/recipes/:slug' do
     @recipe = Recipe.find_by_slug(params[:slug])
 
@@ -24,5 +33,34 @@ class RecipesController < ApplicationController
     end
     
     erb :'/recipes/show'
+  end
+
+  post '/recipes' do
+    if !User.logged_in?(session)
+      redirect to '/'
+    end 
+
+    recipe = Recipe.create(name: params[:recipe][:name])
+    
+    if recipe
+      ingredients = params[:ingredients][:ids].collect do |ingredient_id|
+        Ingredient.find_by(id: ingredient_id)
+      end.compact
+
+      params[:ingredients][:names].each do |ingredient_name|
+        ingredient = Ingredient.find_or_create_by(name: ingredient_name) unless ingredient_name == ""
+        if ingredient
+          ingredients << ingredient
+        end
+      end
+      
+      recipe.ingredients = ingredients.uniq
+      recipe.user = User.current_user(session)
+      recipe.save
+
+      redirect to "/recipes/#{recipe.slug}"
+    else
+      redirect to 'recipes/new'
+    end
   end
 end

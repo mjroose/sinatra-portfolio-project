@@ -1,0 +1,18 @@
+<h1>New Recipe</h1>
+
+<form method="POST" action="/recipes">
+  <p><input type="text" name="recipe[name]" placeholder="Recipe Name"></p>
+  <h3>Ingredients</h3>
+  <p>
+    <% @ingredients.each do |ingredient| %>
+      <label for="<%= ingredient.id %>"><%= ingredient.name %></label>
+        <input type="checkbox" id="<%= ingredient.id %>" value="<%= ingredient.id %>" name="ingredients[ids][]">
+    <% end %>
+  </p>
+  <% 5.times do %>
+    <p>
+      <input type="text" name="ingredients[names][]" placeholder="New Ingredient">
+    </p>
+  <% end %>
+  <input type="submit" value="Add Recipe">
+</form>
