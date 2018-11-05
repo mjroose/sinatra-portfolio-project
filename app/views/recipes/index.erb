@@ -1,5 +1,7 @@
 <h1>Welcome, <%= @user.username %>!</h1>
 
+<a href="/recipes/new">Add Recipe</a>
+
 <h3>Recipes:</h3>
 <ul>
   <% @user.recipes.all.each do |recipe| %>

@@ -56,7 +56,6 @@ class RecipesController < ApplicationController
       recipe.user = User.current_user(session)
       recipe.save
 
-      binding.pry
       redirect to "/recipes/#{recipe.slug}"
     else
       redirect to 'recipes/new'
@@ -74,13 +73,27 @@ class RecipesController < ApplicationController
       if params[:name] && params[:name] != ""
         recipe.update(name: params[:name])
       end
+
       recipe.set_ingredients_from_params(params)
       recipe.save
 
-      binding.pry
       redirect to "/recipes/#{recipe.slug}"
     else
       redirect to "/recipes"
     end    
+  end
+
+  delete '/recipes/:slug' do
+    recipe = Recipe.find_by_slug(params[:slug])
+
+    if !User.logged_in?(session) ||  User.current_user(session).id != recipe.user.id
+      redirect to '/'
+    end
+
+    if recipe
+      recipe.destroy
+    end
+
+    redirect to '/recipes'
   end
 end

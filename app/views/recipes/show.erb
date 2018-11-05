@@ -1,5 +1,11 @@
 <h1><%= @recipe.name %></h1>
 
+<a href="/recipes/<%= @recipe.slug %>/edit">Edit Recipe</a>
+<form method="POST" action="/recipes/<%= @recipe.slug %>">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Recipe">
+</form>
+
 <ul>
   <% @recipe.ingredients.each do |ingredient| %>
     <li><%= ingredient.name %></li>
