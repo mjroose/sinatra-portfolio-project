@@ -4,7 +4,6 @@ class Recipe < ActiveRecord::Base
   has_many :ingredients, through: :recipes_ingredients
 
   validates :name, presence: true
-  validates :name, uniqueness: true
 
   def set_ingredients_from_params(params)
     if params[:ingredients].include? :ids
