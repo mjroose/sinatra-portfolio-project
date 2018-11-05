@@ -2,7 +2,7 @@
 
 <h3>Recipes:</h3>
 <ul>
-  <% @recipes.all.each do |recipe| %>
+  <% @user.recipes.all.each do |recipe| %>
     <li><a href="/recipes/<%= recipe.slug %>"><%= recipe.name %></a></li>
   <% end %>
 </ul>

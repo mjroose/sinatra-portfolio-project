@@ -7,33 +7,28 @@ class UsersController < ApplicationController
     set :session_secret, 'secret'
   end
 
-  get '/signup' do
+  get '/users/signup' do
     if User.logged_in?(session)
-      redirect to "/#{User.current_user(session).slug}"
+      redirect to "/recipes"
     else
       erb :'/users/create_user'
     end
   end
 
-  get '/login' do
+  get '/users/login' do
     if User.logged_in?(session)
-      redirect "/#{User.current_user(session).slug}"
+      redirect to "/recipes"
     else
       erb :'/users/login'
     end
   end
 
-  get '/users/:slug' do
-    @user = User.find_by_slug(params[:slug])
-    erb :'/users/show'
-  end
-
   get '/logout' do
     session.clear
-    redirect to '/login'
+    redirect to '/users/login'
   end
 
-  post '/signup' do
+  post '/users' do
     user = User.new(username: params[:username], email: params[:email], password: params[:password])
 
     if user.save
@@ -45,12 +40,12 @@ class UsersController < ApplicationController
     end
   end
 
-  post '/login' do
-    user = User.find_by(username: params[:username]) || User.find_by(email: params[:email])
+  post '/users/login' do
+    user = User.find_by(username: params[:username])
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect to "/#{user.slug}"
+      redirect to "/recipes"
     else
       @error_message = "Invalid user info."
       erb :'/users/login'

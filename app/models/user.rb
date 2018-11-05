@@ -7,15 +7,6 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :password_digest, presence: true
 
-  def slug
-    username.gsub(/\s/, "-")
-  end
-
-  def self.find_by_slug(slug)
-    username = slug.gsub(/-/, " ")
-    User.find_by(username: username)
-  end
-
   def self.logged_in?(session)
     !!session[:user_id]
   end
