@@ -12,6 +12,7 @@ gem 'bcrypt'
 gem "tux"
 
 group :development do
+  gem 'solargraph'
   gem 'pry'
 end
 
