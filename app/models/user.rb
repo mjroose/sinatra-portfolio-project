@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
   validates :password_digest, presence: true
 
   def self.logged_in?(session)
-    !!session[:user_id]
+    !!session["user_id"]
   end
 
   def self.current_user(session)
-    User.find_by(id: session[:user_id])
+    User.find_by(id: session["user_id"])
   end
 end

@@ -43,21 +43,30 @@ class RecipesController < ApplicationController
     recipe = Recipe.create(name: params[:recipe][:name])
     
     if recipe
-      ingredients = params[:ingredients][:ids].collect do |ingredient_id|
-        Ingredient.find_by(id: ingredient_id)
-      end.compact
+      if params[:ingredients].include? :ids
+        ingredients = params[:ingredients][:ids].collect do |ingredient_id|
+          Ingredient.find_by(id: ingredient_id)
+        end.compact
+      else
+        ingredients = []
+      end
 
-      params[:ingredients][:names].each do |ingredient_name|
-        ingredient = Ingredient.find_or_create_by(name: ingredient_name) unless ingredient_name == ""
-        if ingredient
-          ingredients << ingredient
+      if params[:ingredients].include? :names
+        params[:ingredients][:names].each do |ingredient_name|
+          ingredient = Ingredient.find_or_create_by(name: ingredient_name) unless ingredient_name == ""
+          if ingredient
+            ingredients << ingredient
+          end
         end
       end
+
+      binding.pry
       
       recipe.ingredients = ingredients.uniq
       recipe.user = User.current_user(session)
       recipe.save
 
+      binding.pry
       redirect to "/recipes/#{recipe.slug}"
     else
       redirect to 'recipes/new'

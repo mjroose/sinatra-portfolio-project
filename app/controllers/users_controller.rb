@@ -7,11 +7,11 @@ class UsersController < ApplicationController
     set :session_secret, 'secret'
   end
 
-  get '/users/signup' do
+  get '/users/new' do
     if User.logged_in?(session)
       redirect to "/recipes"
     else
-      erb :'/users/create_user'
+      erb :'/users/new'
     end
   end
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
   end
 
-  get '/logout' do
+  get '/users/logout' do
     session.clear
     redirect to '/users/login'
   end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     if user.save
       session[:user_id] = user.id
 
-      redirect to "/#{user.slug}"
+      redirect to "/recipes"
     else
       redirect to '/signup'
     end
