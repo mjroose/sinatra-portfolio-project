@@ -6,15 +6,6 @@ class Recipe < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  def slug
-    self.name.gsub(/\s/, "-")
-  end
-
-  def self.find_by_slug(slug)
-    name = slug.gsub(/-/, " ")
-    Recipe.find_by(name: name)
-  end
-
   def set_ingredients_from_params(params)
     if params[:ingredients].include? :ids
       self.ingredients = params[:ingredients][:ids].collect do |ingredient_id|
