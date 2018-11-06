@@ -5,10 +5,38 @@
   <p><input type="text" name="recipe[name]" placeholder="Recipe Name" value="<%= @recipe.name %>"></p>
   <h3>Ingredients</h3>
 
-  <% 5.times do %>
-    <p>
-      <input type="text" name="ingredients[names][]" placeholder="New Ingredient">
-    </p>
-  <% end %>
+  <table>
+    <tr>
+      <th>Ingredient</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+    <% @recipe.ingredients.each do |ingredient| %>
+      <tr>
+        <td>
+          <input type="text" name="ingredients[][food][name]" value="<%= ingredient.food.name %>">
+        </td>
+        <td>
+          <input type="text" name="ingredients[][quantity]" value="<%= ingredient.quantity %>">
+        </td>
+        <td>
+          <input type="text" name="ingredients[][unit]" value="<%= ingredient.unit %>">
+        </td>
+      </tr>
+    <% end %>
+    <% 5.times do %>
+      <tr>
+        <td>
+          <input type="text" name="ingredients[][food][name]" placeholder="ingredient">
+        </td>
+        <td>
+          <input type="text" name="ingredients[][quantity]">
+        </td>
+        <td>
+          <input type="text" name="ingredients[][unit]">
+        </td>
+      </tr>
+    <% end %>
+  </table>
   <input type="submit" value="Update Recipe">
 </form>
