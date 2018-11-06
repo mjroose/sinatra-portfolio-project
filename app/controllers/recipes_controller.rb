@@ -21,13 +21,11 @@ class RecipesController < ApplicationController
       redirect to '/'
     end
 
-    @ingredients = Ingredient.all
     erb :'/recipes/new'
   end
 
   get '/recipes/:id/edit' do
     @recipe = Recipe.find_by(id: params[:id])
-    @ingredients = Ingredient.all
 
     if !User.logged_in?(session) ||  User.current_user(session).id != @recipe.user.id
       redirect to '/'
