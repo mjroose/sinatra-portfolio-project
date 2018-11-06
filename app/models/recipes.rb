@@ -10,11 +10,12 @@ class Recipe < ActiveRecord::Base
       cleaned_ingredients = params[:ingredients].find_all { |ingredient| ingredient[:food][:name] != "" }
 
       self.ingredients = cleaned_ingredients.collect do |ingredient|
-        Ingredient.create({
+        Ingredient.find_or_create_by(
+          recipe: self,
           food: Food.find_or_create_by_name_case_insensitive(ingredient[:food][:name]),
           quantity: ingredient[:quantity],
           unit: ingredient[:unit]
-        })
+        )
       end
 
     else
