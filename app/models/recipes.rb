@@ -6,20 +6,19 @@ class Recipe < ActiveRecord::Base
   validates :name, presence: true
 
   def set_ingredients_from_params(params)
-    if params[:ingredients].include? :ids
-      self.ingredients = params[:ingredients][:ids].collect do |ingredient_id|
-        Ingredient.find_by(id: ingredient_id)
-      end.compact
+    if params.include? :ingredients
+      cleaned_ingredients = params[:ingredients].find_all { |ingredient| ingredient[:name] != "" }
+
+      self.recipes_ingredients = cleaned_ingredients.collect do |ingredient_line|
+        RecipesIngredient.create({
+          ingredient: Ingredient.find_or_create_by_name_case_insensitive(ingredient_line[:name]),
+          quantity: ingredient_line[:quantity],
+          unit: ingredient_line[:unit]
+        })
+      end
+      
     else
-      self.ingredients = []
+      self.receipes_ingredients = []
     end
-
-    if params[:ingredients].include? :names
-      self.ingredients += params[:ingredients][:names].collect do |ingredient_name|
-        Ingredient.find_or_create_by(name: ingredient_name) unless ingredient_name == ""
-      end.compact
-    end
-
-    self.ingredients = self.ingredients.uniq
   end
 end

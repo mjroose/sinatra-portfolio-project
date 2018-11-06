@@ -3,16 +3,26 @@
 <form method="POST" action="/recipes">
   <p><input type="text" name="recipe[name]" placeholder="Recipe Name"></p>
   <h3>Ingredients</h3>
-  <p>
-    <% @ingredients.each do |ingredient| %>
-      <label for="<%= ingredient.id %>"><%= ingredient.name %></label>
-        <input type="checkbox" id="<%= ingredient.id %>" value="<%= ingredient.id %>" name="ingredients[ids][]">
+
+  <table>
+    <tr>
+      <th>Ingredient</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+    <% 10.times do %>
+      <tr>
+        <td>
+          <input type="text" name="ingredients[][name]" placeholder="ingredient">
+        </td>
+        <td>
+          <input type="number" name="ingredients[][quantity]">
+        </td>
+        <td>
+          <input type="text" name="ingredients[][unit]">
+        </td>
+      </tr>
     <% end %>
-  </p>
-  <% 5.times do %>
-    <p>
-      <input type="text" name="ingredients[names][]" placeholder="New Ingredient">
-    </p>
-  <% end %>
+  </table>
   <input type="submit" value="Add Recipe">
 </form>
