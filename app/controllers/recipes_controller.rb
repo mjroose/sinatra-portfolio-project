@@ -47,10 +47,11 @@ class RecipesController < ApplicationController
   post '/recipes' do
     if !User.logged_in?(session)
       redirect to '/'
-    end 
+    end
 
     if recipe = Recipe.create(name: params[:recipe][:name])
       recipe.set_ingredients_from_params(params)
+      recipe.set_instructions_from_params(params)
       recipe.user = User.current_user(session)
       recipe.save
 

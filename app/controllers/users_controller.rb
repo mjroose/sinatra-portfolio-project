@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
       redirect to "/recipes"
     else
-      redirect to '/signup'
+      redirect to '/users/new'
     end
   end
 

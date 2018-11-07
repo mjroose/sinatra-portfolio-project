@@ -2,8 +2,8 @@
 
 <form method="POST" action="/recipes">
   <p><input type="text" name="recipe[name]" placeholder="Recipe Name"></p>
-  <h3>Ingredients</h3>
 
+  <h3>Ingredients</h3>
   <table>
     <tr>
       <th>Ingredient</th>
@@ -20,6 +20,18 @@
         </td>
         <td>
           <input type="text" name="ingredients[][unit]">
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <h3>Instructions</h3>
+  <table>
+    <% 10.times do |i| %>
+      <tr>
+        <td>
+          <label for="instruction_<%= i %>"><%= i + 1 %>. </label>
+          <input type="text" name="instructions[][content]" id="instruction_<%= i %>">
         </td>
       </tr>
     <% end %>
