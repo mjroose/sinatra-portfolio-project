@@ -7,32 +7,20 @@ class Recipe < ActiveRecord::Base
   validates :name, presence: true
 
   def set_ingredients_from_params(params)
-    if params.include? :ingredients
-      cleaned_ingredients = params[:ingredients].find_all { |ingredient| ingredient[:food][:name] != "" }
-
-      self.ingredients = cleaned_ingredients.collect do |ingredient|
-        Ingredient.find_or_create_by(
-          recipe: self,
-          food: Food.find_or_create_by_name_case_insensitive(ingredient[:food][:name]),
-          quantity: ingredient[:quantity],
-          unit: ingredient[:unit]
-        )
-      end
-
-    else
-      self.ingredients = []
-    end
+    self.clear_ingredients
+    Ingredient.find_or_create_from_rows(self, params[:ingredients])
   end
 
   def set_instructions_from_params(params)
     self.clear_instructions
-
-    if params.include? :instructions
-      Instruction.set_recipe_instructions_from_rows(self, params[:instructions])
-    end
+    Instruction.find_or_create_from_rows(self, params[:instructions])
   end
 
   def clear_instructions
     self.instructions = []
+  end
+
+  def clear_ingredients
+    self.ingredients = []
   end
 end
