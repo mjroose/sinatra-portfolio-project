@@ -2,18 +2,38 @@ class Instruction < ActiveRecord::Base
   belongs_to :recipe
   validates :content, presence: true
 
-  def set_position
-    recipe_id = self.recipe.id
+  def self.set_recipe_instructions_from_rows(recipe, instruction_rows)
+      instructions = Instruction.find_or_create_from_rows(recipe, instruction_rows)
+  end
 
-    recipe_instructions = Instruction.all.find_all do |instruction|
-      recipe_id == instruction.recipe.id
-    end
+  def self.clear_recipe_ingredients(recipe)
+    recipe.instructions = []
+  end
+
+  def self.find_or_create_from_rows(recipe, rows)
+    cleaned_rows = self.clean_rows(rows)
     
-    if recipe_instructions != nil && recipe_instructions.size > 1
-      self.position = recipe_instructions.sort { |a, b| a.position <=> b.position }.last.position + 1
-    else
-      self.position = 1
+    instructions = cleaned_rows.each_with_index do |row|
+      Instruction.find_or_create_by({
+        recipe: recipe,
+        content: row[:content]
+        position: index + 1
+      })
     end
-    self.save
+
+    self.assign_positions(instructions)
+  end
+
+  def self.assign_positions(instructions)
+    instructions.each_with_index do |instruction, index|
+      instruction.position = index + 1
+      instruction.save
+    end
+  end
+
+  def self.clean_rows(rows)
+    rows.find_all do |instruction|
+      instruction[:content] != ""
+    end
   end
 end

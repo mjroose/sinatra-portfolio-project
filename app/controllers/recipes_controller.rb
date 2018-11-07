@@ -74,6 +74,7 @@ class RecipesController < ApplicationController
       end
 
       recipe.set_ingredients_from_params(params)
+      recipe.set_instructions_from_params(params)
       recipe.save
 
       redirect to "/recipes/#{recipe.id}"

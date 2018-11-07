@@ -3,8 +3,8 @@
 <form method="POST" action="/recipes/<%= @recipe.id %>">
   <input type="hidden" name="_method" value="patch">
   <p><input type="text" name="recipe[name]" placeholder="Recipe Name" value="<%= @recipe.name %>"></p>
-  <h3>Ingredients</h3>
 
+  <h3>Ingredients</h3>
   <table>
     <tr>
       <th>Ingredient</th>
@@ -38,5 +38,27 @@
       </tr>
     <% end %>
   </table>
+
+  <h3>Instructions</h3>
+  <table>
+    <% @recipe.instructions.each do |instruction| %>
+      <tr>
+        <td>
+          <label for="instruction_position<%= instruction.position %>"><%= instruction.position %>. </label>
+          <input type="text" name="instructions[][content]" id="instruction_position<%= instruction.position %>" value="<%= instruction.content %>">
+        </td>
+      </tr>
+    <% end %>
+
+    <% 5.times do |i| %>
+      <tr>
+        <td>
+          <label for="instruction_<%= i %>"><%= i + @recipe.instructions.last.position + 1 %>. </label>
+          <input type="text" name="instructions[][content]" id="instruction_<%= i %>">
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
   <input type="submit" value="Update Recipe">
 </form>

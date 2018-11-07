@@ -16,10 +16,22 @@
 </div>
 
 <div class="row justify-content-md-center">
+  <h3>Ingredients</h3>
   <div class="col-lg-8">
     <ul class="list-group">
       <% @recipe.ingredients.each do |ingredient| %>
         <li class="list-group-item"><%= ingredient.food.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row justify-content-md-center">
+  <h3>Instructions</h3>
+  <div class="col-lg-8">
+    <ul class="list-group">
+      <% @recipe.instructions.each do |instruction| %>
+        <li class="list-group-item"><%= instruction.position %>. <%= instruction.content %></li>
       <% end %>
     </ul>
   </div>

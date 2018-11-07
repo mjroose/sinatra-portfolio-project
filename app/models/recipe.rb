@@ -25,21 +25,14 @@ class Recipe < ActiveRecord::Base
   end
 
   def set_instructions_from_params(params)
-    self.instructions = []
+    self.clear_instructions
+
     if params.include? :instructions
-      cleaned_instructions = params[:instructions].find_all { |instruction| instruction[:content] != "" }
-
-      self.instructions = cleaned_instructions.collect do |instruction|
-        Instruction.find_or_create_by({
-          recipe: self,
-          content: instruction[:content],
-          position: 0
-        })
-      end
-
-      self.instructions.each do |instruction|
-        instruction.set_position
-      end
+      Instruction.set_recipe_instructions_from_rows(self, params[:instructions])
     end
+  end
+
+  def clear_instructions
+    self.instructions = []
   end
 end
