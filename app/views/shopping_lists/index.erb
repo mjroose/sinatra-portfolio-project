@@ -1,0 +1,10 @@
+<h1>Shopping Lists</h1>
+
+<ul>
+  <% @shopping_lists.each do |shopping_list| %>
+    <li>
+      <a href="/shopping_lists/<%= shopping_list.id %>"><h3><%= shopping_list.name %></h6></a>
+      <p><%= shopping_list.recipe_list %></p>
+    </li>
+  <% end %>
+</ul>
