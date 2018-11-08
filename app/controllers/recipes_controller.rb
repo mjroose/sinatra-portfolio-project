@@ -69,8 +69,8 @@ class RecipesController < ApplicationController
     end
 
     if recipe
-      if params[:name] && params[:name] != ""
-        recipe.update(name: params[:name])
+      if params[:recipe][:name] && params[:recipe][:name] != ""
+        recipe.update(name: params[:recipe][:name])
       end
 
       recipe.set_ingredients_from_params(params)

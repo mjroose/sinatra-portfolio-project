@@ -1,5 +1,9 @@
 <h1>Shopping Lists</h1>
 
+<a href="/users/<%= @user.id %>">Home</a>
+<a href="/shopping_lists/new">New Shopping List</a>
+<a href="/users/logout">Log Out</a>
+
 <ul>
   <% @shopping_lists.each do |shopping_list| %>
     <li>

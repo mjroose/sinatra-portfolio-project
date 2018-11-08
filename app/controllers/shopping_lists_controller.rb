@@ -8,8 +8,8 @@ class ShoppingListsController < ApplicationController
   end
 
   get '/shopping_lists' do
-    if User.logged_in?(session) && user = User.current_user(session)
-      @shopping_lists = user.shopping_lists
+    if User.logged_in?(session) && @user = User.current_user(session)
+      @shopping_lists = @user.shopping_lists
       erb :'/shopping_lists/index'
     else
       redirect to '/'
