@@ -25,6 +25,19 @@ class ShoppingListsController < ApplicationController
     end
   end
 
+  get '/shopping_lists/:id/edit' do
+    if @shopping_list = ShoppingList.find_by(id: params[:id]) 
+      if !User.logged_in?(session) ||  User.current_user(session).id != @shopping_list.user.id
+        redirect to '/'
+      end
+
+      @recipes = @shopping_list.user.recipes
+      erb :'/shopping_lists/edit'
+    else
+      redirect to '/shopping_lists'
+    end
+  end
+
   get '/shopping_lists/:id' do
     if @shopping_list = ShoppingList.find_by(id: params[:id]) 
       if !User.logged_in?(session) ||  User.current_user(session).id != @shopping_list.user.id
@@ -44,6 +57,34 @@ class ShoppingListsController < ApplicationController
       redirect to "/shopping_lists/#{shopping_list.id}"
     else
       redirect to '/'
+    end
+  end
+
+  patch '/shopping_lists/:id' do
+    if shopping_list = ShoppingList.find_by(id: params[:id])
+      if User.logged_in?(session) && user = User.current_user(session)
+        shopping_list.set_recipes_from_params(params[:recipe_ids])
+
+        redirect to "/shopping_lists/#{shopping_list.id}"
+      else
+        redirect to '/'
+      end
+    else
+      redirect to '/shopping_lists'
+    end
+  end
+
+  delete '/shopping_lists/:id' do
+    if shopping_list = ShoppingList.find_by(id: params[:id])
+      if User.logged_in?(session) && user = User.current_user(session)
+        shopping_list.destroy
+
+        redirect to "/shopping_lists"
+      else
+        redirect to '/'
+      end
+    else
+      redirect to '/shopping_lists'
     end
   end
 end
