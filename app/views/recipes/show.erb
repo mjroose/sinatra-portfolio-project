@@ -21,7 +21,7 @@
 </div>
 <div class="row justify-content-md-left">
   <div class="col-lg-8">
-    <ul class="list-group">
+    <ul class="list-group list-group-flush">
       <% @recipe.ingredients.each do |ingredient| %>
         <li class="list-group-item"><%= ingredient.name_and_amount %></li>
       <% end %>
@@ -34,7 +34,7 @@
 </div>
 <div class="row justify-content-md-left">
   <div class="col-lg-8">
-    <ul class="list-group">
+    <ul class="list-group list-group-flush">
       <% @recipe.instructions.each do |instruction| %>
         <li class="list-group-item"><%= instruction.position %>. <%= instruction.content %></li>
       <% end %>
