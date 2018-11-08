@@ -4,6 +4,7 @@
 
 <div class="row">
   <div class="col">
+    <button onclick="window.location='/recipes'" class="btn btn-light">Back to Recipes</button>
     <button onclick="window.location='/recipes/<%= @recipe.id %>/edit'" class="btn btn-light">Edit Recipe</button>
   </div>
   
@@ -15,30 +16,28 @@
   </div>
 </div>
 
-<div class="row justify-content-md-center">
-  <h3>Ingredients</h3>
+<div class="row justify-content-md-left mt-3">
+  <h4>Ingredients</h4>
+</div>
+<div class="row justify-content-md-left">
   <div class="col-lg-8">
     <ul class="list-group">
       <% @recipe.ingredients.each do |ingredient| %>
-        <li class="list-group-item"><%= ingredient.food.name %></li>
+        <li class="list-group-item"><%= ingredient.name_and_amount %></li>
       <% end %>
     </ul>
   </div>
 </div>
 
-<div class="row justify-content-md-center">
-  <h3>Instructions</h3>
+<div class="row justify-content-md-left mt-3">
+  <h4>Instructions</h4>
+</div>
+<div class="row justify-content-md-left">
   <div class="col-lg-8">
     <ul class="list-group">
       <% @recipe.instructions.each do |instruction| %>
         <li class="list-group-item"><%= instruction.position %>. <%= instruction.content %></li>
       <% end %>
     </ul>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col">
-    <button onclick="window.location='/recipes'" class="btn btn-light">Back to Recipes</button>
   </div>
 </div>
