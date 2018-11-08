@@ -2,63 +2,98 @@
 
 <form method="POST" action="/recipes/<%= @recipe.id %>">
   <input type="hidden" name="_method" value="patch">
-  <p><input type="text" name="recipe[name]" placeholder="Recipe Name" value="<%= @recipe.name %>"></p>
+  <div class="row">
+    <div class="col-6 ml-3">
+      <input type="text" class="form-control form-control-lg" name="recipe[name]"
+            placeholder="Recipe Name" value="<%= @recipe.name %>">
+    </div>
+  </div>
 
-  <h3>Ingredients</h3>
-  <table>
-    <tr>
-      <th>Ingredient</th>
-      <th>Quantity</th>
-      <th>Unit</th>
-    </tr>
-    <% @recipe.ingredients.each do |ingredient| %>
-      <tr>
-        <td>
-          <input type="text" name="ingredients[][food][name]" value="<%= ingredient.food.name %>">
-        </td>
-        <td>
-          <input type="text" name="ingredients[][quantity]" value="<%= ingredient.quantity %>">
-        </td>
-        <td>
-          <input type="text" name="ingredients[][unit]" value="<%= ingredient.unit %>">
-        </td>
-      </tr>
-    <% end %>
-    <% 5.times do %>
-      <tr>
-        <td>
-          <input type="text" name="ingredients[][food][name]" placeholder="ingredient">
-        </td>
-        <td>
-          <input type="text" name="ingredients[][quantity]">
-        </td>
-        <td>
-          <input type="text" name="ingredients[][unit]">
-        </td>
-      </tr>
-    <% end %>
-  </table>
+  <div class="row mt-3">
+    <div class="col">
+      <h3>Ingredients</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 ml-3">
+      <table class="table table-sm table-borderless">
+        <tr>
+          <th style="width: 70%">Ingredient</th>
+          <th style="width: 10%">Quantity</th>
+          <th style="width: 20%">Unit</th>
+        </tr>
+        <tbody>
+          <% @recipe.ingredients.each do |ingredient| %>
+            <tr>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][food][name]" value="<%= ingredient.food.name %>">
+              </td>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][quantity]" value="<%= ingredient.quantity %>">
+              </td>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][unit]" value="<%= ingredient.unit %>">
+              </td>
+            </tr>
+          <% end %>
+          <% 5.times do %>
+            <tr>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][food][name]">
+              </td>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][quantity]">
+              </td>
+              <td>
+                <input type="text" class="form-control" name="ingredients[][unit]">
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <h3>Instructions</h3>
-  <table>
-    <% @recipe.instructions.each do |instruction| %>
-      <tr>
-        <td>
-          <label for="instruction_position<%= instruction.position %>"><%= instruction.position %>. </label>
-          <input type="text" name="instructions[][content]" id="instruction_position<%= instruction.position %>" value="<%= instruction.content %>">
-        </td>
-      </tr>
-    <% end %>
-
-    <% 5.times do |i| %>
-      <tr>
-        <td>
-          <label for="instruction_<%= i %>"><%= i + @recipe.instructions.last.position + 1 %>. </label>
-          <input type="text" name="instructions[][content]" id="instruction_<%= i %>">
-        </td>
-      </tr>
-    <% end %>
-  </table>
+  <div class="row">
+    <div class="col">
+      <h3>Instructions</h3>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-6 ml-3">
+      <table class="table table-sm table-borderless">
+        <tbody>
+          <% @recipe.instructions.each do |instruction| %>
+            <tr>
+              <td style="width: 10%">
+                <label for="instruction_position<%= instruction.position %>"><%= instruction.position %>. </label>
+              </td>
+              <td style="width: 90%">
+                <input type="text" name="instructions[][content]"
+                        class="form-control"
+                        id="instruction_position<%= instruction.position %>"
+                        value="<%= instruction.content %>"
+                >
+              </td>
+            </tr>
+          <% end %>
+          <% 5.times do |i| %>
+            <tr>
+              <td>
+                <label for="instruction_<%= i %>"><%= i + @recipe.instructions.last.position + 1 %>.</label>
+              </td>
+              <td>
+                <input type="text" name="instructions[][content]"
+                        class="form-control"
+                        id="instruction_<%= i %>">
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <input type="submit" value="Update Recipe">
 </form>
