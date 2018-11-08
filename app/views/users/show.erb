@@ -1,23 +1,33 @@
-<h1>Welcome, <%= @user.username %></h1>
+<div class="row">
+  <div class="col">
+    <h1>Welcome, <%= @user.username %></h1>
+    <button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
+  </div>
+</div>
 
-<button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
+<div class="row mt-3">
+  <div class="col-md-6">
+    <a href="/recipes"><h3>Recipes</h3></a>
+    <p>Recent recipes:</p>
+    <ul class="list-group list-group-flush">
+      <% @user.recent(@user.recipes).each do |recipe| %>
+        <a href="/recipes/<%= recipe.id %>">
+          <li class="list-group-item"><%= recipe.name %></li>
+        </a>
+      <% end %>
+    </ul>
+  </div>
 
-<a href="/recipes"><h3>Recipes</h3></a>
-<p>Recent recipes:</p>
-<ul>
-  <% @user.recent(@user.recipes).each do |recipe| %>
-    <a href="/recipes/<%= recipe.id %>">
-      <li><%= recipe.name %></li>
-    </a>
-  <% end %>
-</ul>
 
-<a href="/shopping_lists"><h3>Shopping Lists</h3></a>
-<p>Recent shopping lists:</p>
-<ul>
-  <% @user.recent(@user.shopping_lists).each do |shopping_list| %>
-    <a href="/shopping_lists/<%= shopping_list.id %>">
-      <li><%= shopping_list.name %></li>
-    </a>
-  <% end %>
-</ul>
+  <div class="col-md-6">
+    <a href="/shopping_lists"><h3>Shopping Lists</h3></a>
+    <p>Recent shopping lists:</p>
+    <ul class="list-group list-group-flush">
+      <% @user.recent(@user.shopping_lists).each do |shopping_list| %>
+        <a href="/shopping_lists/<%= shopping_list.id %>">
+          <li class="list-group-item"><%= shopping_list.name %></li>
+        </a>
+      <% end %>
+    </ul>
+  </div>
+</div>

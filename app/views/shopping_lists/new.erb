@@ -1,14 +1,26 @@
-<h1>New Shopping List</h1>
+<div class="row">
+  <div class="col">
+    <h1>New Shopping List</h1>
 
-<p>Select recipes to include in your shopping list.  This app will automatically generate a shopping list with all of the ingredients you will need.</p>
-
-<form method="POST" action="/shopping_lists">
-  <div>
-    <% @recipes.each do |recipe| %>
-      <label for="recipe_<%= recipe.id %>"><%= recipe.name %></label>
-      <input type="checkbox" name="recipe_ids[]" id="recipe_<%= recipe.id %>" value="<%= recipe.id %>">
-    <% end %>
+    <p>Select recipes to include in your shopping list.  This app will automatically generate a shopping list with all of the ingredients you will need.</p>
   </div>
-  
-  <input type="submit" value="Generate List">
-</form>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <form method="POST" action="/shopping_lists">
+      <% @recipes.each do |recipe| %>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" name="recipe_ids[]" id="recipe_<%= recipe.id %>" value="<%= recipe.id %>">
+            </div>
+          </div>
+          <input type="text" class="form-control" aria-label="Text input with checkbox" value="<%= recipe.name %>" readonly>
+        </div>
+      <% end %>
+      <input class="btn btn-primary" type="submit" value="Generate List">
+    </form>
+  </div>
+</div>
+
