@@ -1,5 +1,12 @@
 <h1><%= @shopping_list.name %></h1>
 
+<button onclick="window.location='/shopping_lists/<%= @shopping_list.id %>/edit'" class="btn btn-light">Edit List</button>
+
+<form method="POST" action="/shopping_lists/<%= @shopping_list.id %>" class="float-right">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" class="btn btn-danger" value="Delete List">
+</form>
+
 <h3>Recipes</h3>
 <p><%= @shopping_list.recipe_list %></p>
 
