@@ -47,4 +47,14 @@ class ShoppingList < ActiveRecord::Base
       end
     end.flatten
   end
+
+  def self.create_from_params(recipe_ids = [])
+    shopping_list = self.new
+    
+    shopping_list.recipes = recipe_ids.collect do |recipe_id|
+      Recipe.find_or_create_by(id: recipe_id)
+    end
+
+    shopping_list.save
+  end
 end
