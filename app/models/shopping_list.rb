@@ -50,7 +50,8 @@ class ShoppingList < ActiveRecord::Base
 
   def self.create_from_params(recipe_ids = [])
     shopping_list = self.new
-    shopping_list.set_recipes_from_params
+    shopping_list.set_recipes_from_params(recipe_ids)
+    binding.pry
   end
 
   def set_recipes_from_params(recipe_ids = [])
