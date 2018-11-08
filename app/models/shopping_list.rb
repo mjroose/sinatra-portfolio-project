@@ -25,7 +25,9 @@ class ShoppingList < ActiveRecord::Base
   end
 
   def name
-    self.created_at
+    time_created = self.created_at.getlocal
+    hour = time_created.strftime("%l").strip
+    time_created.strftime("%A, %B %-d, %Y (#{hour}:%M %P)")
   end
 
   def food_names

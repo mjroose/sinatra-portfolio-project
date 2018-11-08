@@ -1,11 +1,11 @@
 <h1>Shopping Lists</h1>
 
-<a href="/users/<%= @user.id %>">Home</a>
-<a href="/shopping_lists/new">New Shopping List</a>
-<a href="/users/logout">Log Out</a>
+<button onclick="window.location='/users/<%= @user.id %>'" class="btn btn-light">Home</button>
+<button onclick="window.location='/shopping_lists/new'" class="btn btn-light">New List</button>
+<button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
 
 <ul>
-  <% @shopping_lists.each do |shopping_list| %>
+  <% @shopping_lists.reverse.each do |shopping_list| %>
     <li>
       <a href="/shopping_lists/<%= shopping_list.id %>"><h3><%= shopping_list.name %></h6></a>
       <p><%= shopping_list.recipe_list %></p>

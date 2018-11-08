@@ -1,12 +1,11 @@
-<h1>Welcome, <%= @user.username %>!</h1>
+<h1>Recipes</h1>
 
-<a href="/users/<%= @user.id %>">Home</a>
-<a href="/recipes/new">New Recipe</a>
-<a href="/users/logout">Log Out</a>
+<button onclick="window.location='/users/<%= @user.id %>'" class="btn btn-light">Home</button>
+<button onclick="window.location='/recipes/new'" class="btn btn-light">New Recipe</button>
+<button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
 
-<h3>Recipes:</h3>
 <ul>
-  <% @user.recipes.all.each do |recipe| %>
+  <% @user.recipes.all.reverse.each do |recipe| %>
     <li><a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a></li>
   <% end %>
 </ul>
