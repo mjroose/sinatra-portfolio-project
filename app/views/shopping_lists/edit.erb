@@ -1,15 +1,33 @@
-<h1>Edit Shopping List</h1>
-
-<p>Select recipes to include in your shopping list.  This app will automatically generate a shopping list with all of the ingredients you will need.</p>
-
-<form method="POST" action="/shopping_lists/<%= @shopping_list.id %>">
-  <input type="hidden" name="_method" value="patch">
-  <div>
-    <% @recipes.each do |recipe| %>
-      <label for="recipe_<%= recipe.id %>"><%= recipe.name %></label>
-      <input type="checkbox" name="recipe_ids[]" id="recipe_<%= recipe.id %>" value="<%= recipe.id %>" <%= "checked" if @shopping_list.recipes.include? recipe %>>
-    <% end %>
+<div class="row">
+  <div class="col">
+    <h1>Edit Shopping List</h1>
+    <p>Select recipes to include in your shopping list.  This app will automatically generate a shopping list with all of the ingredients you will need.</p>
   </div>
-  
-  <input type="submit" value="Update List">
-</form>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <form method="POST" action="/shopping_lists/<%= @shopping_list.id %>">
+      <input type="hidden" name="_method" value="patch">
+      <div>
+        <% @recipes.each do |recipe| %>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox"
+                        name="recipe_ids[]"
+                        id="recipe_<%= recipe.id %>"
+                        value="<%= recipe.id %>"
+                        <%= "checked" if @shopping_list.recipes.include? recipe %>
+                >
+            </div>
+          </div>
+          <input type="text" class="form-control" value="<%= recipe.name %>" readonly>
+        </div>
+        <% end %>
+      </div>
+      
+      <input class="btn btn-primary" type="submit" value="Update List">
+    </form>
+  </div>
+</div>
