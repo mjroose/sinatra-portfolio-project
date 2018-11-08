@@ -28,6 +28,14 @@ class UsersController < ApplicationController
     redirect to '/users/login'
   end
 
+  get '/users/:id' do
+    if User.logged_in?(session) && @user = User.current_user(session)
+      erb :'/users/show'
+    else
+      redirect to '/'
+    end
+  end
+
   post '/users' do
     user = User.new(username: params[:username], email: params[:email], password: params[:password])
 

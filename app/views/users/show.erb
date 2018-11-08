@@ -1,0 +1,19 @@
+<h1>Welcome, <%= @user.username %></h1>
+
+<a href="/recipes"><h3>Recipes</h3></a>
+<ul>
+  <% @user.recipes.each do |recipe| %>
+    <a href="/recipes/<%= recipe.id %>">
+      <li><%= recipe.name %></li>
+    </a>
+  <% end %>
+</ul>
+
+<a href="/shopping_lists"><h3>Shopping Lists</h3></a>
+<ul>
+  <% @user.shopping_lists.each do |shopping_list| %>
+    <a href="/shopping_lists/<%= shopping_list.id %>">
+      <li><%= shopping_list.name %></li>
+    </a>
+  <% end %>
+</ul>
