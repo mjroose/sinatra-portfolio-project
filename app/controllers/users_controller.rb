@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if user.save
       session[:user_id] = user.id
 
-      redirect to "/recipes"
+      redirect to "/users/#{user.id}"
     else
       redirect to '/users/new'
     end
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect to "/recipes"
+      redirect to "/users/#{user.id}"
     else
       @error_message = "Invalid user info."
       erb :'/users/login'
