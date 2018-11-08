@@ -1,0 +1,11 @@
+<h1><%= @shopping_list.name %></h1>
+
+<h3>Recipes</h3>
+<p><%= @shopping_list.recipe_list %></p>
+
+<h3>Foods</h3>
+<ul>
+  <% @shopping_list.foods.each do |food| %>
+    <li><%= food.name %></li>
+  <% end %>
+</ul>

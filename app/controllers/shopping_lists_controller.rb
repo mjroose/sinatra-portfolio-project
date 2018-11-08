@@ -12,7 +12,20 @@ class ShoppingListsController < ApplicationController
       @shopping_lists = user.shopping_lists
       erb :'/shopping_lists/index'
     else
-      redirect to '/users/login'
+      redirect to '/'
+    end
+  end
+
+  get '/shopping_lists/:id' do
+    if @shopping_list = ShoppingList.find_by(id: params[:id]) 
+      if !User.logged_in?(session) ||  User.current_user(session).id != @shopping_list.user.id
+        redirect to '/'
+      end
+
+      erb :'/shopping_lists/show'
+
+    else
+      redirect to '/shopping_lists'
     end
   end
 end
