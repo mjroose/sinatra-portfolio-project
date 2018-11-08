@@ -8,16 +8,16 @@ class UsersController < ApplicationController
   end
 
   get '/users/new' do
-    if User.logged_in?(session)
-      redirect to "/recipes"
+    if User.logged_in?(session) && user = User.current_user(session)
+      redirect to "/users/#{user.id}"
     else
       erb :'/users/new'
     end
   end
 
   get '/users/login' do
-    if User.logged_in?(session)
-      redirect to "/recipes"
+    if User.logged_in?(session) && user = User.current_user(session)
+      redirect to "/users/#{user.id}"
     else
       erb :'/users/login'
     end
