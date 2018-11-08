@@ -16,6 +16,15 @@ class ShoppingListsController < ApplicationController
     end
   end
 
+  get '/shopping_lists/new' do
+    if User.logged_in?(session) && user = User.find_by(id: session[:user_id])
+      @recipes = user.recipes
+      erb :'/shopping_lists/new'
+    else
+      redirect to '/'
+    end
+  end
+
   get '/shopping_lists/:id' do
     if @shopping_list = ShoppingList.find_by(id: params[:id]) 
       if !User.logged_in?(session) ||  User.current_user(session).id != @shopping_list.user.id

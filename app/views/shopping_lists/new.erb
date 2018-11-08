@@ -1,0 +1,14 @@
+<h1>New Shopping List</h1>
+
+<p>Select recipes to include in your shopping list.  This app will automatically generate a shopping list with all of the ingredients you will need.</p>
+
+<form method="POST" action="/shopping_lists">
+  <div>
+    <% @recipes.each do |recipe| %>
+      <label for="recipe_<%= recipe.id %>"><%= recipe.name %></label>
+      <input type="checkbox" name="recipes_ids[]" id="recipe_<%= recipe.id %>">
+    <% end %>
+  </div>
+  
+  <input type="submit" value="Add Recipe">
+</form>
