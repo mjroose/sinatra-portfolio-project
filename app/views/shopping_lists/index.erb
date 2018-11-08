@@ -1,14 +1,28 @@
-<h1>Shopping Lists</h1>
+<div class="row">
+  <div class="col">
+    <h1>Shopping Lists</h1>
+  </div>
+</div>
 
-<button onclick="window.location='/users/<%= @user.id %>'" class="btn btn-light">Home</button>
-<button onclick="window.location='/shopping_lists/new'" class="btn btn-light">New List</button>
-<button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
+<div class="row">
+  <div class="col">
+    <button onclick="window.location='/users/<%= @user.id %>'" class="btn btn-light">Home</button>
+    <button onclick="window.location='/shopping_lists/new'" class="btn btn-light">New List</button>
+    <button onclick="window.location='/users/logout'" class="btn btn-light">Log Out</button>
+  </div>
+</div>
 
-<ul>
-  <% @shopping_lists.reverse.each do |shopping_list| %>
-    <li>
-      <a href="/shopping_lists/<%= shopping_list.id %>"><h3><%= shopping_list.name %></h6></a>
-      <p><%= shopping_list.recipe_list %></p>
-    </li>
-  <% end %>
-</ul>
+<div class="row mt-3">
+  <div class="col">
+    <ul class="list-group list-group-flush">
+      <% @shopping_lists.reverse.each do |shopping_list| %>
+        <a href="/shopping_lists/<%= shopping_list.id %>">
+          <li class="list-group-item">
+            <h3><%= shopping_list.name %></h6>
+            <p><%= shopping_list.recipe_list %></p>
+          </li>
+        </a>
+      <% end %>
+    </ul>
+  </div>
+</div>
