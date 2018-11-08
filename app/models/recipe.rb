@@ -2,6 +2,8 @@ class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :ingredients
   has_many :foods, through: :ingredients
+  has_many :shopping_list_recipes
+  has_many :shopping_lists, through: :shopping_list_recipes
   has_many :instructions
 
   validates :name, presence: true
